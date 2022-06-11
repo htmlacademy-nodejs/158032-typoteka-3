@@ -1,7 +1,7 @@
 # Личный проект «Типотека» [![Build status][travis-image]][travis-url]
 
 * Студент: [Aleksandrs Goncaruks](https://up.htmlacademy.ru/nodejs/3/user/158032).
-* Наставник: `Неизвестно`.
+* Наставник: [Даниил Васильев](https://htmlacademy.ru/profile/id2080687).
 
 ---
 
