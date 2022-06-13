@@ -1,15 +1,19 @@
-# Файлы и директории операционной системы
+# OS
 .DS_Store
 Thumbs.db
 
-# Файлы редактора
+# Editor
 .idea
 *.sublime*
 .vscode
 
-# Вспомогательные файлы
+# Miscellaneous
 *.log*
 node_modules/
 
-# Директория с собранными файлами проекта
+# Build output
 build/
+
+# Mocks
+mocks.json
+
