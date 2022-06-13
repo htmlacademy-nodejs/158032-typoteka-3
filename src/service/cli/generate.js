@@ -43,7 +43,7 @@ const generateCreatedDate = () => {
   const minimalDate = new Date();
   minimalDate.setMonth(currentDate.getMonth() - MAX_MONTH_OFFSET_IN_PAST);
 
-  return new Date(getRandomInt(minimalDate.getTime(), currentDate.getTime())).toLocaleString('en-GB');
+  return new Date(getRandomInt(minimalDate.getTime(), currentDate.getTime()));
 }
 
 const generateArticles = (count) => (
