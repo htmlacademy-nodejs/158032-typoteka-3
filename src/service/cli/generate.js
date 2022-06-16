@@ -8,36 +8,9 @@ const DEFAULT_COUNT = 1;
 const MAX_MONTH_OFFSET_IN_PAST = 3;
 const MAX_SENTENCES_IN_ANNOUNCE = 5;
 const FILE_NAME = `mocks.json`;
-
-const TITLES = [
-  `Here's What No One Tells You About Blog.`,
-  `20 Wonderful Blog. Number 16 is Absolutely Stunning`,
-  `7 Facts That Nobody Told You About Blog.`,
-  `All You Need To Know About Blog.`,
-  `10 Useful Tips From Experts In Blog.`,
-];
-
-const SENTENCES = [
-  `You know you have a problem when you light up a cigarette while you already have one lit in the ashtray.`,
-  `What could go wrong?`,
-  `And West Virginians are angry, right?`,
-  `We still need more time.`,
-  `Anyway, moral of the story: Don't ask Andrew Garfield about his famous girlfriend.`,
-  `Originally from Hidalgo, Mexico, Greisa moved to Dallas, Texas, with her family when she was 7 years old.`,
-  `This isn't been a samizdat revolution, sparked by epistles from dissident intellectuals.`,
-  `So one of the things I did was explain [in the interview] why I was asking.`,
-  `That is, just because you're worried about something doesn't mean it's going to happen.`,
-  `Rona continues his description: Descending into the ocean is sheer excitement.`,
-];
-
-const CATEGORIES = [
-  `Science`,
-  `Politics`,
-  `Culture`,
-  `Sports`,
-  `Nature`,
-  `Books`,
-];
+const TITLES_FILE_PATH = `./data/titles.txt`;
+const SENTENCES_FILE_PATH = `./data/sentences.txt`;
+const CATEGORIES_FILE_PATH = `./data/categories.txt`;
 
 const generateCreatedDate = () => {
   const currentDate = new Date();
@@ -47,22 +20,36 @@ const generateCreatedDate = () => {
   return new Date(getRandomInt(minimalDate.getTime(), currentDate.getTime()));
 }
 
-const generateArticles = (count) => (
+const generateArticles = (count, titles, sentences, categories) => (
   Array(count).fill({}).map(() => ({
-    title: TITLES[getRandomInt(0, TITLES.length - 1)],
+    title: titles[getRandomInt(0, titles.length - 1)],
     createdDate: generateCreatedDate(),
-    announce: shuffle(SENTENCES).slice(0, MAX_SENTENCES_IN_ANNOUNCE).join(` `),
-    fullText: shuffle(SENTENCES).slice(0, getRandomInt(MAX_SENTENCES_IN_ANNOUNCE, SENTENCES.length)).join(` `),
-    category: [CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]],
+    announce: shuffle(sentences).slice(0, MAX_SENTENCES_IN_ANNOUNCE).join(` `),
+    fullText: shuffle(sentences).slice(0, getRandomInt(MAX_SENTENCES_IN_ANNOUNCE, sentences.length)).join(` `),
+    category: [categories[getRandomInt(0, categories.length - 1)]],
   }))
 );
+
+const readFileContent = async (filePath) => {
+  try {
+    const content = await fs.readFile(filePath, 'utf8');
+    return content.trim().split('\n');
+  } catch (err) {
+    console.error(chalk.red(`Failed to read file content: `, err));
+    return [];
+  }
+}
 
 module.exports = {
 	name: '--generate',
 	async run(args) {
+    const titles = await readFileContent(TITLES_FILE_PATH);
+    const sentences = await readFileContent(SENTENCES_FILE_PATH);
+    const categories = await readFileContent(CATEGORIES_FILE_PATH);
+
 		const [count] = args;
 		const articleCount = Number.parseInt(count, 10) || DEFAULT_COUNT;
-		const content = JSON.stringify(generateArticles(articleCount));
+		const content = JSON.stringify(generateArticles(articleCount, titles, sentences, categories));
 
     try {
       await fs.writeFile(FILE_NAME, content);
