@@ -1,8 +1,8 @@
 'use strict';
 
-const {shuffle, getRandomInt} = require('../../utils');
-const fs = require('fs').promises;
-const chalk = require('chalk');
+const {shuffle, getRandomInt} = require(`../../utils`);
+const fs = require(`fs`).promises;
+const chalk = require(`chalk`);
 
 const DEFAULT_COUNT = 1;
 const MAX_MONTH_OFFSET_IN_PAST = 3;
@@ -18,7 +18,7 @@ const generateCreatedDate = () => {
   minimalDate.setMonth(currentDate.getMonth() - MAX_MONTH_OFFSET_IN_PAST);
 
   return new Date(getRandomInt(minimalDate.getTime(), currentDate.getTime()));
-}
+};
 
 const generateArticles = (count, titles, sentences, categories) => (
   Array(count).fill({}).map(() => ({
@@ -32,30 +32,30 @@ const generateArticles = (count, titles, sentences, categories) => (
 
 const readFileContent = async (filePath) => {
   try {
-    const content = await fs.readFile(filePath, 'utf8');
-    return content.trim().split('\n');
+    const content = await fs.readFile(filePath, `utf8`);
+    return content.trim().split(`\n`);
   } catch (err) {
     console.error(chalk.red(`Failed to read file content: `, err));
     return [];
   }
-}
+};
 
 module.exports = {
-	name: '--generate',
-	async run(args) {
+  name: `--generate`,
+  async run(args) {
     const titles = await readFileContent(TITLES_FILE_PATH);
     const sentences = await readFileContent(SENTENCES_FILE_PATH);
     const categories = await readFileContent(CATEGORIES_FILE_PATH);
 
-		const [count] = args;
-		const articleCount = Number.parseInt(count, 10) || DEFAULT_COUNT;
-		const content = JSON.stringify(generateArticles(articleCount, titles, sentences, categories));
+    const [count] = args;
+    const articleCount = Number.parseInt(count, 10) || DEFAULT_COUNT;
+    const content = JSON.stringify(generateArticles(articleCount, titles, sentences, categories));
 
     try {
       await fs.writeFile(FILE_NAME, content);
-      return console.info(chalk.green('Operation success. File created.'));
+      return console.info(chalk.green(`Operation success. File created.`));
     } catch (err) {
-      return console.error(chalk.red('Failed to write data to file: '), err);
+      return console.error(chalk.red(`Failed to write data to file: `), err);
     }
-	}
-}
+  }
+};

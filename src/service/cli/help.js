@@ -1,9 +1,9 @@
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require(`chalk`);
 module.exports = {
-	name: '--help',
-	run() {
+  name: `--help`,
+  run() {
     const text = `
     This programm will generate mock data.
     Guide:
@@ -15,5 +15,5 @@ module.exports = {
     `;
 
     console.info(chalk.gray(text));
-	}
-}
+  }
+};

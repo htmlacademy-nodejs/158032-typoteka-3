@@ -1,11 +1,11 @@
 'use strict';
-const chalk = require('chalk');
-const http = require('http');
-const fs = require('fs').promises;
-const { HttpCode, ErrorMessage } = require('../../constants');
+const chalk = require(`chalk`);
+const http = require(`http`);
+const fs = require(`fs`).promises;
+const {HttpCode, ErrorMessage} = require(`../../constants`);
 
 const DEFAULT_PORT = 3000;
-const DATA_FILE_PATH = './mocks.json';
+const DATA_FILE_PATH = `./mocks.json`;
 
 const sendResponse = (res, statusCode, body) => {
   const template = `
@@ -19,17 +19,17 @@ const sendResponse = (res, statusCode, body) => {
   `;
   res.writeHead(statusCode, {
     'Content-Type': `text/html; charset=UTF-8`
-  })
+  });
   res.end(template);
-}
+};
 
 const handleUserRequest = async (req, res) => {
   try {
     switch (req.url) {
       case `/`: {
-        const fileContent = await fs.readFile(DATA_FILE_PATH, 'utf8');
+        const fileContent = await fs.readFile(DATA_FILE_PATH, `utf8`);
         const data = JSON.parse(fileContent);
-        const titles = data.map(item => {
+        const titles = data.map((item) => {
           return `<li>${item.title}</li>`;
         });
         const responseBody = `<ul>${titles.join(``)}</ul>`;
@@ -44,21 +44,21 @@ const handleUserRequest = async (req, res) => {
   } catch (err) {
     sendResponse(res, HttpCode.INTERNAL_SERVER_ERROR, ErrorMessage.INTERNAL_SERVER_ERROR);
   }
-}
+};
 
 module.exports = {
-	name: '--server',
-	async run(args) {
-    const port = Number.parseInt(args[0]) || DEFAULT_PORT;
+  name: `--server`,
+  async run(args) {
+    const port = Number.parseInt(args[0], 10) || DEFAULT_PORT;
 
     http
       .createServer(handleUserRequest)
       .listen(port)
-      .on('listening', () => {
+      .on(`listening`, () => {
         console.info(chalk.green(`Server listening on port: ${port}`));
       })
-      .on('error', ({message}) => {
+      .on(`error`, ({message}) => {
         console.info(chalk.red(`Failed to start ther server: ${message}`));
       });
-	}
-}
+  }
+};
