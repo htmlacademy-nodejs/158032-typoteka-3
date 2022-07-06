@@ -1,3 +1,5 @@
+const path = require('path');
+
 const express = require('express');
 const mainRouter = require('./routes/main');
 const authRouter = require('./routes/auth');
@@ -8,6 +10,11 @@ const articlesRouter = require('./routes/articles');
 const DEFAULT_PORT = 8080;
 
 const app = express();
+
+app.set(`views`, `./src/express/templates`);
+app.set(`view engine`, `pug`);
+
+app.use(express.static(path.join(__dirname, `public`)));
 
 app.use(`/`, mainRouter);
 app.use(`/`, authRouter);
