@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const mainRouter = require('./routes/main');
 const authRouter = require('./routes/auth');
-const searchRouter = require('./routes/articles');
+const searchRouter = require('./routes/search');
 const cabinetRouter = require('./routes/cabinet');
 const articlesRouter = require('./routes/articles');
 
@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, `public`)));
 
 app.use(`/`, mainRouter);
 app.use(`/`, authRouter);
-app.use(`/`, searchRouter);
+app.use(`/search`, searchRouter);
 app.use(`/my`, cabinetRouter);
 app.use(`/articles`, articlesRouter);
 

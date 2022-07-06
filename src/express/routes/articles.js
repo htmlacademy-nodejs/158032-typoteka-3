@@ -3,16 +3,16 @@ const { Router } = require('express');
 const articlesRouter = new Router();
 
 articlesRouter.get('/category/:id', (req, res) => {
-  res.send(req.originalUrl);
+  res.render('articles-by-category');
 });
 articlesRouter.get('/add', (req, res) => {
-  res.send(req.originalUrl);
+  res.render('post');
 });
 articlesRouter.get('/edit/:id', (req, res) => {
-  res.send(req.originalUrl);
+  res.render('post');
 });
 articlesRouter.get('/:id', (req, res) => {
-  res.send(req.originalUrl);
+  res.render('post-detail');
 });
 
 module.exports = articlesRouter;

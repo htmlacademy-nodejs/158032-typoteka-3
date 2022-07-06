@@ -3,13 +3,13 @@ const { Router } = require('express');
 const cabinetRouter = new Router();
 
 cabinetRouter.get('/', (req, res) => {
-  res.send(req.originalUrl);
+  res.render('my');
 });
 cabinetRouter.get('/comments', (req, res) => {
-  res.send(req.originalUrl);
+  res.render('comments');
 });
 cabinetRouter.get('/categories', (req, res) => {
-  res.send(req.originalUrl);
+  res.render('all-categories');
 });
 
 module.exports = cabinetRouter;
