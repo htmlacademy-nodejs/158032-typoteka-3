@@ -17,22 +17,35 @@ const TEMPLATES_NAME_MAP = {
   '500': '500.html',
   '404': '404.html',
 };
+const MIGRATIONS_MAP = [
+  [/href='\.\//g, "href='/"],
+  [/href='css\//g, "href='/css/"],
+  [/src='img\//g, "src='/img/"],
+  [/src='js\//g, "src='/js/"],
+  [/.+(?=body)/s, "extends shared/layout\nblock body\n  "],
+  [/footer.+2019/s, "include shared/footer"],
+  [/script.+/s, "include shared/scripts"],
+];
 
 (async function htmlToPugTemplates() {
   const markupFiles = await readdir(MARKUP_PATH);
 
-  for (const [templateName] of Object.entries(TEMPLATES_NAME_MAP)) {
+  for (const [templateName, markupFileName] of Object.entries(TEMPLATES_NAME_MAP)) {
     try {
-      const markupFile = markupFiles.find(file => file === TEMPLATES_NAME_MAP[templateName]);
+      const markupFile = markupFiles.find(file => file === markupFileName);
       if (!markupFile) {
         console.info(`Markup file for ${templateName} does not exist`);
         continue;
       }
 
       const templateMarkup = await readFile(`${MARKUP_PATH}/${markupFile}`, 'utf8');
-      const templatePug = html2pug(templateMarkup);
-      await writeFile(`${TEMPLATES_PATH}/${templateName}.pug`, templatePug);
+      let templatePug = html2pug(templateMarkup);
 
+      for (const [fromRegExp, toString] of MIGRATIONS_MAP) {
+        templatePug = templatePug.replace(fromRegExp, toString);
+      }
+
+      await writeFile(`${TEMPLATES_PATH}/${templateName}.pug`, templatePug);
     } catch (error) {
       console.error(error);
     }

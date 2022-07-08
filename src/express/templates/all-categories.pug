@@ -1,20 +1,10 @@
-doctype html
-html(lang='ru')
-  head
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width,initial-scale=1')
-    meta(name='description', content='Личный блог Типотека')
-    meta(http-equiv='X-UA-Compatible', content='ie=edge')
-    title Типотека
-    link(rel='preload', href='./fonts/Inter-Regular.woff2', as='font', crossorigin='anonymous')
-    link(rel='preload', href='./fonts/Inter-Medium.woff2', as='font', crossorigin='anonymous')
-    link(rel='preload', href='./fonts/SFProDisplay-Regular.woff2', as='font', crossorigin='anonymous')
-    link(rel='stylesheet', href='css/style.min.css')
+extends shared/layout
+block body
   body
     .wrapper.wrapper--nobackground
       header.header
         a.header__logo.logo(href='#')
-          img.logo__image(src='img/icons/logo-image-only.svg', alt='логотип Тайпотеки')
+          img.logo__image(src='/img/icons/logo-image-only.svg', alt='логотип Тайпотеки')
           span.logo__name Типотека
         button.button.button--colored.header__button-new Новая запись
         .header__dropdown
@@ -74,10 +64,5 @@ html(lang='ru')
                   span.visually-hidden Редактировать категорию
                 button.category__button.button.button--category(type='submit') Сохранить
                 button.category__button.button.button--category(type='button') Удалить
-      footer.footer
-        a.footer__copyright(href='#', aria-label='HTMLAcademy')
-          img(src='img/icons/HTMLAcademyLogo.svg', width='112', height='50', alt='HTMLAcademy')
-        span.footer__dot
-        p.footer__text Типотека, 2019
-    script(src='js/vendor.js')
-    script(src='js/main.js')
+      include shared/footer
+    include shared/scripts

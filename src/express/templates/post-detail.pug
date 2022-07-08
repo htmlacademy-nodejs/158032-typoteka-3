@@ -1,20 +1,10 @@
-doctype html
-html(lang='ru')
-  head
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width,initial-scale=1')
-    meta(name='description', content='Личный блог Типотека')
-    meta(http-equiv='X-UA-Compatible', content='ie=edge')
-    title Типотека
-    link(rel='preload', href='./fonts/Inter-Regular.woff2', as='font', crossorigin='anonymous')
-    link(rel='preload', href='./fonts/Inter-Medium.woff2', as='font', crossorigin='anonymous')
-    link(rel='preload', href='./fonts/SFProDisplay-Regular.woff2', as='font', crossorigin='anonymous')
-    link(rel='stylesheet', href='css/style.min.css')
+extends shared/layout
+block body
   body
     .wrapper
       header.header
         a.header__logo.logo(href='#')
-          img.logo__image(src='img/icons/logo-image-only.svg', alt='логотип Тайпотеки')
+          img.logo__image(src='/img/icons/logo-image-only.svg', alt='логотип Тайпотеки')
           span.logo__name Типотека
         nav.header__nav
           ul.header__nav-list
@@ -23,7 +13,7 @@ html(lang='ru')
             li.header__list-item
               a.header__exit(href='#') Выйти
         a.header__avatar.avatar
-          img(src='img/avatar-2.png', alt='аватар пользователя')
+          img(src='/img/avatar-2.png', alt='аватар пользователя')
         a.header__search.button.button--search(href='#', aria-label='поиск по сайту')
       main
         section.post
@@ -52,7 +42,7 @@ html(lang='ru')
                       sup 13
                     button.themes__remove-btn(type='button') Удалить категорию
               .post__picture
-                img(src='img/sea-fullsize@1x.jpg', alt='пейзаж море, скалы, пляж')
+                img(src='/img/sea-fullsize@1x.jpg', alt='пейзаж море, скалы, пляж')
               .post__text
                 h3 Бирюзовое доверие
                 p.
@@ -65,7 +55,7 @@ html(lang='ru')
               ul.comments__list
                 li.comments__comment
                   .comments__avatar.avatar
-                    img(src='img/avatar-1.png', alt='аватар пользователя')
+                    img(src='/img/avatar-1.png', alt='аватар пользователя')
                   .comments__text
                     .comments__head
                       p Евгений Петров •
@@ -73,7 +63,7 @@ html(lang='ru')
                     p.comments__message Автор, ты все выдумал, покайся
                 li.comments__comment
                   .comments__avatar.avatar
-                    img(src='img/avatar-5.png', alt='аватар пользователя')
+                    img(src='/img/avatar-5.png', alt='аватар пользователя')
                   .comments__text
                     .comments__head
                       p Александр Марков •
@@ -81,7 +71,7 @@ html(lang='ru')
                     p.comments__message Конечно, прежде чем так писать, нужно искренне приложить усилия, чтобы разобраться — не все люди умеют выражать свои мысли.
                 li.comments__comment
                   .comments__avatar.avatar
-                    img(src='img/avatar-4.png', alt='аватар пользователя')
+                    img(src='/img/avatar-4.png', alt='аватар пользователя')
                   .comments__text
                     .comments__head
                       p Евгений Петров •
@@ -89,23 +79,11 @@ html(lang='ru')
                     p.comments__message Автор, ты все выдумал, покайся
                 li.comments__comment
                   .comments__avatar.avatar
-                    img(src='img/avatar-3.png', alt='аватар пользователя')
+                    img(src='/img/avatar-3.png', alt='аватар пользователя')
                   .comments__text
                     .comments__head
                       p Александр Марков •
                       time.comments__date(datetime='2019-03-21T20:33') 21.03.2019, 20:33
                     p.comments__message Конечно, прежде чем так писать, нужно искренне приложить усилия, чтобы разобраться — не все люди умеют выражать свои мысли.
-              .comments__footer.comments__footer--user
-                form(action='#', method='POST')
-                  .comments__avatar.avatar
-                    img(src='img/avatar-2.png', alt='аватар пользователя')
-                  label
-                    textarea(rows='1', name='message', placeholder='Присоединиться к обсуждению')
-                  button.comments__button.button.button--colored(type='submit') Опубликовать
-      footer.footer
-        a.footer__copyright(href='#', aria-label='HTMLAcademy')
-          img(src='img/icons/HTMLAcademyLogo.svg', width='112', height='50', alt='HTMLAcademy')
-        span.footer__dot
-        p.footer__text Типотека, 2019
-    script(src='js/vendor.js')
-    script(src='js/main.js')
+              .comments__include shared/footer
+    include shared/scripts
