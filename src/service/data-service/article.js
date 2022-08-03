@@ -35,7 +35,7 @@ class ArticleDataService {
     return article;
   }
 
-  delete({id: articleId}) {
+  delete(articleId) {
     this._articles = this._articles.filter(({id}) => id !== articleId);
   }
 

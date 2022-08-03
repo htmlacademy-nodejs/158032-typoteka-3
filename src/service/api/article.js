@@ -9,43 +9,43 @@ const {articleValidator} = require(`../middlewares/article-validator`);
 
 const route = new Router();
 
-module.exports.articleApi = (app, dataService, commentDataService) => {
+module.exports.articleApi = (app, articleDataService, commentDataService) => {
   app.use(`/articles`, route);
 
   route.get(`/`, async (req, res) => {
-    const articles = await dataService.findAll();
+    const articles = await articleDataService.findAll();
 
     res.status(HttpCode.OK).json(articles);
   });
 
-  route.get(`/:articleId`, articleExists(dataService), async (req, res) => {
+  route.get(`/:articleId`, articleExists(articleDataService), async (req, res) => {
     const article = res.locals.article;
 
     res.status(HttpCode.OK).json(article);
   });
 
   route.post(`/`, articleValidator, async (req, res) => {
-    const article = dataService.create(req.body);
+    const article = articleDataService.create(req.body);
 
     res.status(HttpCode.CREATED).json(article);
   });
 
-  route.put(`/:articleId`, [articleExists(dataService), articleValidator], async (req, res) => {
+  route.put(`/:articleId`, [articleExists(articleDataService), articleValidator], async (req, res) => {
     const article = res.locals.article;
     const update = req.body;
-    const updatedArticle = dataService.update(article, update);
+    const updatedArticle = articleDataService.update(article, update);
 
     res.status(HttpCode.OK).json(updatedArticle);
   });
 
-  route.delete(`/:articleId`, articleExists(dataService), async (req, res) => {
-    const article = res.locals.article;
-    dataService.delete(article);
+  route.delete(`/:articleId`, articleExists(articleDataService), async (req, res) => {
+    const {id: articleId} = res.locals.article;
+    articleDataService.delete(articleId);
 
     res.status(HttpCode.NO_CONTENT).send();
   });
 
-  route.get(`/:articleId/comments`, articleExists(dataService), async (req, res) => {
+  route.get(`/:articleId/comments`, articleExists(articleDataService), async (req, res) => {
     const {articleId} = req.params;
     const comments = commentDataService.findAll(articleId);
 
@@ -59,7 +59,7 @@ module.exports.articleApi = (app, dataService, commentDataService) => {
     res.status(HttpCode.NO_CONTENT).send();
   });
 
-  route.post(`/:articleId/comments`, [articleExists(dataService), commentValidator], async (req, res) => {
+  route.post(`/:articleId/comments`, [articleExists(articleDataService), commentValidator], async (req, res) => {
     const {id: articleId} = res.locals.article;
     const comment = commentDataService.create(articleId, req.body);
 
