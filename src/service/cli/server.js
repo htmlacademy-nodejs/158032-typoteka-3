@@ -2,9 +2,10 @@
 
 const chalk = require(`chalk`);
 const express = require(`express`);
-const postsRouter = require(`../routes/posts`);
+const api = require(`../api`);
 
 const DEFAULT_PORT = 3000;
+const API_PREFIX = `/api`;
 
 module.exports = {
   name: `--server`,
@@ -13,7 +14,7 @@ module.exports = {
     const app = express();
 
     app.use(express.json());
-    app.use(`/posts`, postsRouter);
+    app.use(API_PREFIX, api);
 
     app.listen(
         DEFAULT_PORT,

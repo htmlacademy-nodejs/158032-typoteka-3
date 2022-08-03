@@ -1,8 +1,10 @@
 'use strict';
 
-const {shuffle, getRandomInt} = require(`../../utils/utils`);
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
+const {nanoid} = require(`nanoid`);
+const {MAX_ID_LENGTH} = require(`../../constants`);
+const {getRandomInt, shuffle} = require(`../../utils`);
 
 const DEFAULT_COUNT = 1;
 const MAX_MONTH_OFFSET_IN_PAST = 3;
@@ -11,6 +13,8 @@ const FILE_NAME = `mocks.json`;
 const TITLES_FILE_PATH = `./data/titles.txt`;
 const SENTENCES_FILE_PATH = `./data/sentences.txt`;
 const CATEGORIES_FILE_PATH = `./data/categories.txt`;
+const COMMENTS_FILE_PATH = `./data/comments.txt`;
+const MAX_COMMENTS = 5;
 
 const generateCreatedDate = () => {
   const currentDate = new Date();
@@ -20,13 +24,24 @@ const generateCreatedDate = () => {
   return new Date(getRandomInt(minimalDate.getTime(), currentDate.getTime()));
 };
 
-const generateArticles = (count, titles, sentences, categories) => (
+const generateArticles = (count, titles, sentences, categories, comments) => (
   Array(count).fill({}).map(() => ({
+    id: nanoid(MAX_ID_LENGTH),
+    comments: generateComments(getRandomInt(1, MAX_COMMENTS), comments),
     title: titles[getRandomInt(0, titles.length - 1)],
     createdDate: generateCreatedDate(),
     announce: shuffle(sentences).slice(0, MAX_SENTENCES_IN_ANNOUNCE).join(` `),
     fullText: shuffle(sentences).slice(0, getRandomInt(MAX_SENTENCES_IN_ANNOUNCE, sentences.length)).join(` `),
-    category: [categories[getRandomInt(0, categories.length - 1)]],
+    category: [categories[getRandomInt(0, categories.length - 1)]]
+  }))
+);
+
+const generateComments = (count, comments) => (
+  Array(count).fill({}).map(() => ({
+    id: nanoid(MAX_ID_LENGTH),
+    text: shuffle(comments)
+      .slice(0, getRandomInt(1, 3))
+      .join(` `)
   }))
 );
 
@@ -46,10 +61,11 @@ module.exports = {
     const titles = await readFileContent(TITLES_FILE_PATH);
     const sentences = await readFileContent(SENTENCES_FILE_PATH);
     const categories = await readFileContent(CATEGORIES_FILE_PATH);
+    const comments = await readFileContent(COMMENTS_FILE_PATH);
 
     const [count] = args;
     const articleCount = Number.parseInt(count, 10) || DEFAULT_COUNT;
-    const content = JSON.stringify(generateArticles(articleCount, titles, sentences, categories));
+    const content = JSON.stringify(generateArticles(articleCount, titles, sentences, categories, comments));
 
     try {
       await fs.writeFile(FILE_NAME, content);

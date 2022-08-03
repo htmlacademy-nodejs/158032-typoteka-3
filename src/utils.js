@@ -15,3 +15,19 @@ module.exports.shuffle = (someArray) => {
 
   return someArray;
 };
+
+module.exports.isOptional = (_) => {
+  return true;
+};
+
+module.exports.isNonEmptyString = (value) => {
+  return value && (typeof value === `string` || value instanceof String);
+};
+
+module.exports.isNonEmptyArray = (value) => {
+  return Array.isArray(value) && value.length > 0;
+};
+
+module.exports.lengthIsInRange = (min, max) => {
+  return (value) => value.length > min && value.length < max;
+};
