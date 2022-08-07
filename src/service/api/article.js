@@ -7,9 +7,8 @@ const {commentExists} = require(`../middlewares/comment-exists`);
 const {commentValidator} = require(`../middlewares/comment-validator`);
 const {articleValidator} = require(`../middlewares/article-validator`);
 
-const route = new Router();
-
 module.exports.articleApi = (app, articleDataService, commentDataService) => {
+  const route = new Router();
   app.use(`/articles`, route);
 
   route.get(`/`, async (req, res) => {

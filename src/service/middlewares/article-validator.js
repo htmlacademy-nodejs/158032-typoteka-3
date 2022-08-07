@@ -1,7 +1,7 @@
 'use strict';
 
 const {isNonEmptyString, isNonEmptyArray, lengthIsInRange, isOptional} = require(`../../utils`);
-const {resourceValidatorFactory} = require(`./factories/resource-validator`);
+const {requestValidatorFactory} = require(`./factories/resource-validator`);
 
 const rules = {
   title: [isNonEmptyString, lengthIsInRange(30, 250)],
@@ -12,5 +12,5 @@ const rules = {
   fullText: [isOptional, isNonEmptyString, lengthIsInRange(30, 1000)]
 };
 
-module.exports.articleValidator = resourceValidatorFactory(rules);
+module.exports.articleValidator = requestValidatorFactory(rules);
 
