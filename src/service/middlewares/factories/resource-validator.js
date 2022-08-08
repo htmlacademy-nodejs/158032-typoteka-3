@@ -3,10 +3,11 @@
 const {HttpCode, ErrorMessage} = require(`../../../constants`);
 const {isOptional} = require(`../../../utils`);
 
-module.exports.resourceValidatorFactory = (rules) => {
+module.exports.requestValidatorFactory = (rules, propName = `body`) => {
   return (req, res, next) => {
+    const propToValidate = req[propName];
     const invalidKeys = Object.entries(rules).reduce((acc, [key, validators]) => {
-      const value = req.body[key];
+      const value = propToValidate[key];
 
       if (!value && validators.includes(isOptional)) {
         return acc;
@@ -21,6 +22,7 @@ module.exports.resourceValidatorFactory = (rules) => {
 
     if (invalidKeys.length) {
       res.status(HttpCode.BAD_REQUEST).send(ErrorMessage.invalidRequestBody(invalidKeys));
+      return;
     }
 
     next();

@@ -2,14 +2,13 @@
 
 const {Router} = require(`express`);
 const {HttpCode} = require(`../../constants`);
-
-const route = new Router();
-
+const {searchQueryValidator} = require(`../middlewares/search-query-validator`);
 
 module.exports.searchApi = (app, articleDataService) => {
+  const route = new Router();
   app.use(`/search`, route);
 
-  route.get(`/`, async (req, res) => {
+  route.get(`/`, searchQueryValidator, async (req, res) => {
     const {query} = req.query;
     const articles = await articleDataService.searchByTitle(query);
 
