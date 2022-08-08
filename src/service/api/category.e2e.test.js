@@ -21,11 +21,8 @@ describe(`Categories`, () => {
       .get(`/categories`);
   });
 
-  test(`Status code is OK`, async () => {
-    expect(response.status).toBe(HttpCode.OK);
-  });
-
   test(`Returns correct categories`, async () => {
+    expect(response.status).toBe(HttpCode.OK);
     expect(response.body).toEqual(categoriesMockData);
   });
 });
