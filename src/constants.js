@@ -19,8 +19,13 @@ module.exports = {
   },
   ErrorMessage: {
     resourceNotFound: (id) => `Resource not found: ${id}`,
+    routeNotFound: (url) => `Route not found: ${url}`,
     invalidRequestBody: (invalidKeys) => `Invalid request body keys: ${invalidKeys.join(`, `)}`
   },
-  MAX_ID_LENGTH: 6
+  MAX_ID_LENGTH: 6,
+  Env: {
+    DEVELOPMENT: `development`,
+    PRODUCTION: `production`
+  }
 };
 
