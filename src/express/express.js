@@ -8,8 +8,8 @@ const authRouter = require(`./routes/auth`);
 const searchRouter = require(`./routes/search`);
 const cabinetRouter = require(`./routes/cabinet`);
 const articlesRouter = require(`./routes/articles`);
-const {ErrorMessage, HttpCode} = require('../constants');
-const {getLogger} = require('../service/lib/logger');
+const {ErrorMessage, HttpCode} = require(`../constants`);
+const {getLogger} = require(`../service/lib/logger`);
 
 const DEFAULT_PORT = 8080;
 const PUBLIC_DIR = `public`;
