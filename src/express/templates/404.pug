@@ -4,14 +4,14 @@ block body
     .wrapper-color
       header.header.header--error
         a.header__logo.header__logo--404.logo(href='#')
-          img(src='/img/icons/logo.svg', alt='логотип Тайпотеки')
-        a.header__registration(href='#') Регистрация
-        a.header__enter(href='#') Вход с паролем
-        a.header__search.button.button--search(href='#', aria-label='поиск по сайту')
+          img(src='/img/icons/logo.svg', alt='Typoteka logo')
+        a.header__registration(href='#') Registration
+        a.header__enter(href='#') Login
+        a.header__search.button.button--search(href='/search', aria-label='Search')
       main
-        h1.visually-hidden Ошибка 404
+        h1.visually-hidden Error 404
         section.error
-          h2.error__title.title.title--big Похоже ошиблись адресом
-          a.error__link.text.text--big(href='main.html') Вернуться на главную
+          h2.error__title.title.title--big This page doesn't exist.
+          a.error__link.text.text--big(href='main.html') Back to the home page.
       include shared/footer
     include shared/scripts

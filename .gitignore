@@ -10,6 +10,7 @@ Thumbs.db
 # Miscellaneous
 *.log*
 node_modules/
+upload/
 
 # Build output
 build/

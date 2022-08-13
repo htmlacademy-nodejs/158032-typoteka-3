@@ -2,58 +2,50 @@ extends shared/layout
 block body
   body
     .wrapper
-      header.header
-        a.header__logo.logo(href='#')
-          img.logo__image(src='/img/icons/logo-image-only.svg', alt='логотип Тайпотеки')
-          span.logo__name Типотека
-        button.button.button--colored.header__button-new Новая запись
-        .header__dropdown
-          a.button.button--burger.header__burger(href='#') Открыть меню
-          ul.navigation.header__navigation
-            li.navigation__item
-              a(href='main.html') Пункт меню
-            li.navigation__item
-              a(href='main.html') Пункт меню
-            li.navigation__item
-              a(href='main.html') Пункт меню
-            li.navigation__item
-              a(href='main.html') Пункт меню
-        a.header__search.button.button--search(href='#', aria-label='поиск по сайту')
+      include shared/header
       main
         section
           .popup.popup--new-publication.popup--anti
             .new-publication
-              form(action='#', method='POST')
+              form(action="#" method="post" enctype="multipart/form-data", autocomplete="off")
                 .new-publication__header
-                  h1 Новая публикация
+                  h1 New article
                   .new-publication__date-form
-                    h3 Дата публикации
+                    h3 Date of publication
                     .new-publication__date-form-division
                       .new-publication__date-block
-                        label(for='new-publication-date', aria-label='Календарь')
-                        input#new-publication-date(type='text', name='date', placeholder='2019-03-21')
-                  button.new-publication__button.button.button--colored(type='submit') Опубликовать
-                a.popup__button.button.button--popup-close(aria-label='Закрыть окно') Закрыть окно
+                        label(for='new-publication-date', aria-label='Calendar')
+                        input#new-publication-date(type='text', name='createdDate', placeholder='2019-03-21')
+                  button.new-publication__button.button.button--colored(type='submit') Publish
+                a.popup__button.button.button--popup-close(aria-label='Close') Close
                 .new-publication__form.form
                   .form__wrapper.form__wrapper--intro
                     .form__field
+                      - const titlePrefill = (prefill && prefill.title) ? prefill.title : ``;
                       label
-                        input(type='text', name='title', placeholder='Заголовок', required)
+                        input(type='text', name='title', placeholder='Title', required, value=titlePrefill)
                     .form__field.form__field--post-image
                       label
-                        input#image-name-field(type='text', name='photo', placeholder='Фотография', readonly)
+                        input#image-name-field(type='text', name='image', placeholder='Image', readonly)
                       .form__image-loader.form__image-loader--publication
                         label
                           input.visually-hidden(type='file', name='upload')
-                          | Обзор
-                    .new-publication__category-wrapper
-                      a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
+                          | Upload
+                    .form__field
+                      each category in categories
+                        - const categoryPreChecked = (prefill && prefill.category) && prefill.category.includes(category)
+                        label #{category}
+                          input(type='checkbox', name='category[]', value=category, checked=categoryPreChecked)
+                    //.new-publication__category-wrapper
+                    //  a.new-publication__form-link.button.button--transparent(href='#') Add category
                   .form__wrapper.form__wrapper--text
                     .form__field.form__field--publication-text
+                      - const announcePrefill = (prefill && prefill.announce) ? prefill.announce : ``;
                       label
-                        textarea(rows='5', name='announcement', placeholder='Анонс публикации')
+                        textarea(rows='5', name='announce', placeholder='Announce') #{announcePrefill}
                     .form__field.form__field--publication-text
+                      - const fullTextPrefill = (prefill && prefill.fullText) ? prefill.fullText : ``;
                       label
-                        textarea(rows='10', name='full-text', placeholder='Полный текст публикации')
+                        textarea(rows='10', name='fullText', placeholder='Full text') #{fullTextPrefill}
       include shared/footer
     include shared/scripts

@@ -10,13 +10,17 @@ const cabinetRouter = require(`./routes/cabinet`);
 const articlesRouter = require(`./routes/articles`);
 
 const DEFAULT_PORT = 8080;
+const PUBLIC_DIR = `public`;
+const UPLOAD_DIR = `upload`;
+
 
 const app = express();
 
 app.set(`views`, `./src/express/templates`);
 app.set(`view engine`, `pug`);
 
-app.use(express.static(path.join(__dirname, `public`)));
+app.use(express.static(path.join(__dirname, PUBLIC_DIR)));
+app.use(express.static(path.join(__dirname, UPLOAD_DIR)));
 
 app.use(`/`, mainRouter);
 app.use(`/`, authRouter);
