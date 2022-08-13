@@ -40,7 +40,7 @@ module.exports = {
 
     try {
       app.listen(
-          DEFAULT_PORT,
+        port,
           (err) => {
             if (err) {
               return logger.error(`An error occurred on starting the server: ${err.message}`);
