@@ -31,3 +31,11 @@ module.exports.isNonEmptyArray = (value) => {
 module.exports.lengthIsInRange = (min, max) => {
   return (value) => value.length > min && value.length < max;
 };
+
+module.exports.ensureArray = (value) => {
+  if (!value) {
+    return [];
+  }
+
+  return Array.isArray(value) ? value : [value];
+};
