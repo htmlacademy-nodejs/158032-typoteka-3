@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS articles_categories;
 CREATE TABLE users(
   id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   email varchar(255) UNIQUE NOT NULL,
-  password_hash varchar(255) NOT NULL,
-  first_name varchar(255) NOT NULL,
-  last_name varchar(255) NOT NULL,
+  passwordHash varchar(255) NOT NULL,
+  firstName varchar(255) NOT NULL,
+  lastName varchar(255) NOT NULL,
   avatar varchar(50) NOT NULL
 );
 
