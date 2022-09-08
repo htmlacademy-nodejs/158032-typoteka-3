@@ -272,3 +272,20 @@ module.exports.commentsMockData = [
     "text": "Super sublime shot =)"
   }
 ];
+
+module.exports.usersMockData = [
+  {
+    email: `user1@example.com`,
+    passwordHash: `5f4dcc3b5aa765d61d8327deb882cf99`,
+    firstName: `User1FirstName`,
+    lastName: `User1LastName`,
+    avatar: `user1Avatar.jpg`
+  },
+  {
+    email: `user2@example.com`,
+    passwordHash: `5f4dcc3b5aa765d62d8327deb882cf99`,
+    firstName: `User2FirstName`,
+    lastName: `User2LastName`,
+    avatar: `user2Avatar.jpg`
+  }
+];

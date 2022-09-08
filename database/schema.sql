@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS articles;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS articles CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS articles_categories;
 
 CREATE TABLE users(
@@ -34,7 +34,7 @@ CREATE TABLE comments(
 );
 
 CREATE TABLE categories(
-  id integer PRIMARY KEY,
+  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name varchar(255) NOT NULL
 );
 
