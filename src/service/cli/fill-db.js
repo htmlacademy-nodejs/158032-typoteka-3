@@ -7,7 +7,8 @@ const {usersMockData} = require('../../testing/mocks');
 
 const DEFAULT_COUNT = 1;
 const MAX_MONTH_OFFSET_IN_PAST = 3;
-const MAX_SENTENCES_IN_ANNOUNCE = 3;
+const MAX_SENTENCES_IN_TITLE = 2;
+const MAX_SENTENCES_IN_ANNOUNCE = 2;
 const GENERATED_FILE_PATH = `./database/fill-db.sql`;
 const TITLES_FILE_PATH = `./data/titles.txt`;
 const SENTENCES_FILE_PATH = `./data/sentences.txt`;
@@ -27,7 +28,7 @@ const generateArticles = (articlesCount, usersCount, titles, articlesSentences, 
   Array(articlesCount).fill({}).map((_, articleIndex) => ({
     userId: getRandomInt(1, usersCount),
     comments: generateComments(getRandomInt(1, MAX_COMMENTS), usersCount, articleIndex + 1, commentsSentences),
-    title: titles[getRandomInt(0, titles.length - 1)],
+    title: titles[getRandomInt(0, MAX_SENTENCES_IN_TITLE)],
     createdDate: generateCreatedDate(),
     announce: shuffle(articlesSentences).slice(0, MAX_SENTENCES_IN_ANNOUNCE).join(` `),
     fullText: shuffle(articlesSentences).slice(0, getRandomInt(MAX_SENTENCES_IN_ANNOUNCE, articlesSentences.length)).join(` `),
@@ -99,20 +100,20 @@ module.exports = {
     ).join(`,\n`);
 
     const content = `
-      INSERT INTO users(email, passwordHash, firstName, lastName, avatar) VALUES
+      INSERT INTO users("email", "passwordHash", "firstName", "lastName", "avatar") VALUES
       ${usersValues};
-      INSERT INTO categories(name) VALUES
+      INSERT INTO categories("name") VALUES
       ${categoriesValues};
       ALTER TABLE articles DISABLE TRIGGER ALL;
-      INSERT INTO articles(title, userId, announce, fullText) VALUES
+      INSERT INTO articles("title", "userId", "announce", "fullText") VALUES
       ${articlesValues};
       ALTER TABLE articles ENABLE TRIGGER ALL;
       ALTER TABLE articles_categories DISABLE TRIGGER ALL;
-      INSERT INTO articles_categories(articleId, categoryId) VALUES
+      INSERT INTO articles_categories("articleId", "categoryId") VALUES
       ${articlesCategoriesValues};
       ALTER TABLE articles_categories ENABLE TRIGGER ALL;
       ALTER TABLE comments DISABLE TRIGGER ALL;
-      INSERT INTO COMMENTS(text, userId, articleId) VALUES
+      INSERT INTO COMMENTS("text", "userId", "articleId") VALUES
       ${commentsValues};
       ALTER TABLE comments ENABLE TRIGGER ALL;
     `;
