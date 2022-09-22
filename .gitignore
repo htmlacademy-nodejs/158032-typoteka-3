@@ -17,3 +17,6 @@ build/
 
 # Mocks
 mocks.json
+
+#Environment
+.env
